@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content" />
+  <title>键帽森林 · Typing Grove</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">⌨</span><div><strong>键帽森林</strong><small>TYPING GROVE</small></div></div>
+      <div class="top-actions"><button class="sound-toggle" id="fullscreenBtn" aria-label="进入全屏" aria-pressed="false">⛶ <span>全屏</span></button><button class="sound-toggle" id="soundBtn" aria-label="切换音效">♫ <span>音效开</span></button><span class="avatar-btn" aria-label="森林练习者">小鹿 <span>✦</span></span></div>
+    </header>
+
+    <section class="hero-copy"><p class="eyebrow">TODAY'S LITTLE QUEST <span>✦</span></p><h1>让手指在森林里<br><em>长出翅膀</em>吧！</h1><p class="subtitle">敲下每一个字，帮小树精收集闪亮的词语。</p></section>
+
+    <section class="game-layout">
+      <div class="game-column">
+        <div class="game-board" id="gameBoard">
+          <div class="board-sky"><span class="cloud c1"></span><span class="cloud c2"></span><span class="spark s1">✦</span><span class="spark s2">✧</span><span class="spark s3">·</span></div>
+          <div class="board-hud"><div><span class="hud-label">森林时间</span><strong id="timer">60</strong><span class="hud-unit">秒</span></div><div class="combo" id="combo">连击 <b>0</b> <span>✦</span></div></div>
+          <div class="tree-scene"><div class="tree-shadow"></div><div class="tree-character" id="tree"><div class="leaf leaf-a"></div><div class="leaf leaf-b"></div><div class="trunk"></div><div class="face"><i class="eye left"></i><i class="eye right"></i><span class="mouth">◡</span></div><span class="blush b1"></span><span class="blush b2"></span><div class="pot"></div></div><div class="word-orbit orbit-1">sunny</div><div class="word-orbit orbit-2">森林</div><div class="word-orbit orbit-3">bloom</div><div class="word-orbit orbit-4">花朵</div></div>
+          <div class="target-wrap"><span class="target-label">现在输入</span><div id="pinyinGuide" class="pinyin-guide" aria-label="拼音提示"></div><div class="target" id="target"><span class="typed" id="typed"></span><span class="remaining" id="remaining">sunny</span></div><input id="typingInput" aria-label="输入上方词语，点击这里开始练习" autocomplete="off" spellcheck="false" autocapitalize="off" autocorrect="off" enterkeyhint="done" placeholder="点击这里，开始输入…" /><div class="hint" id="hint">按下键盘开始你的森林漫步 <span>→</span></div></div>
+          <div class="progress-track"><div class="progress-fill" id="progress"></div></div>
+          <div class="board-footer"><span id="statusMessage">准备好了吗？小树精在等你。</span><span class="keyboard-tip">⌨ 使用真实键盘输入</span></div>
+        </div>
+        <section class="keyboard-panel" aria-label="模拟键盘"><div class="keyboard-heading"><strong>指尖小向导</strong><span id="inputState" role="status">输入状态待检测 · 点击词语开始</span></div><label class="pinyin-toggle"><input type="checkbox" id="pinyinToggle" checked /> 显示拼音与全拼键位提示</label><div id="compositionProgress" class="composition-progress" role="status">输入汉字时，这里会显示组词进度</div><p id="keyHint">薄荷色是下一个目标键，珊瑚色是正在按下的键</p><div id="virtualKeyboard" aria-hidden="true"></div><p class="keyboard-note">输入法状态根据实际输入检测；中文组词时，请完成选词后提交。</p></section><div class="controls"><div class="control-group"><span class="control-label">语言</span><div class="segmented" id="langControl"><button class="active" data-lang="mix">中英混合</button><button data-lang="zh">中文</button><button data-lang="en">English</button></div></div><div class="control-group"><span class="control-label">难度</span><div class="segmented" id="difficultyControl"><button data-diff="easy">轻松</button><button class="active" data-diff="normal">刚刚好</button><button data-diff="hard">挑战</button></div></div><button class="restart-btn" id="restartBtn">↻ <span>重新开始</span></button></div>
+      </div>
+
+      <aside class="stats-panel"><section class="learning-panel" aria-label="词汇与错题本"><h2>我的练习计划</h2><label for="scopeSelect">词汇范围</label><select id="scopeSelect"><option value="forest">森林词库</option><option value="primary">小学 · 示例词汇</option><option value="secondary">中学 · 示例词汇</option><option value="custom">我的词汇表</option></select><p id="scopeSummary"></p><details><summary>编辑 / 导入词汇表</summary><label for="customWords">每行一个词，也支持逗号分隔</label><textarea id="customWords" rows="4" placeholder="森林&#10;sunny&#10;知识"></textarea><p>仅汉字或英文字母，每词最多 24 字符，最多 500 词。自定义汉字没有拼音时仍可正常练习。</p><input id="wordFile" type="file" accept=".txt,text/plain" aria-label="导入 TXT 词汇表" /><button id="saveWords" type="button">保存并练习</button></details><p id="learningMessage" role="status"></p><div class="review-summary"><strong>错字错题本</strong><span id="reviewCounts"></span></div><div class="review-actions"><button id="reviewDue">到期复习</button><button id="reviewAll">反复练错词</button><button id="normalPractice">范围练习</button></div><p id="practiceMode" role="status"></p><details><summary>查看错题与复习时间</summary><div id="mistakeList"></div></details><p class="review-note">答错后 10 分钟重看；整词无错完成后，按 1、3、7、14、30 天安排复习。打开页面和每分钟检查到期项。</p></section><div class="panel-heading"><span>今日小档案</span><span class="date">11月 07日</span></div><div class="score-card"><div class="score-ring"><svg viewBox="0 0 120 120"><circle class="ring-bg" cx="60" cy="60" r="51"></circle><circle class="ring-value" id="ring" cx="60" cy="60" r="51"></circle></svg><div class="ring-content"><strong id="accuracy">0%</strong><small>准确率</small></div></div><div class="score-copy"><strong id="wpm">0</strong><span>字符 / 分钟</span><small>一点点，变熟练 ✨</small></div></div><div class="mini-stats"><div><span>已输入</span><strong id="typedCount">0</strong></div><div><span>正确数</span><strong id="correctCount">0</strong></div><div><span>最高连击</span><strong id="bestCombo">0</strong></div></div><div class="encourage" id="encourage"><span class="bubble-icon">☀</span><div><strong>小树精说</strong><p>慢慢来，每一次敲击都在变厉害！</p></div></div><div class="legend"><span><i class="dot mint"></i>正确输入</span><span><i class="dot coral"></i>再试一次</span></div></aside>
+    </section>
+    <footer class="footer-note">每一次练习，都是给未来的自己种下一棵小树 <span>🌱</span></footer>
+  </main>
+  <script src="learning.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
